@@ -4,7 +4,7 @@
 # @Date:   2019-04-26 17:03:46
 # @Last Modified time: 2019-04-26 17:03:46
 from flask_sqlalchemy import SQLAlchemy
-# from Api_Manager.extensions import db
+from Api_Manager import db
 from werkzeug.security import generate_password_hash,check_password_hash
 #生成token模块
 from itsdangerous import TimedJSONWebSignatureSerializer as Seralize
@@ -12,6 +12,8 @@ from flask import current_app
 from flask_login import UserMixin
 # from Api_Manager.extensions import login_manager
 
+ROLE_USER=0
+ROLE_ADMIN=1
 
 # class Role(db.Model):
 #     """用户身份表"""
@@ -26,27 +28,30 @@ from flask_login import UserMixin
 #         return '<Role %r>' % self.username
 
 
-# class User(db.Model,UserMixin):
-#     """用户表"""
-#     __tablename__ = "tbl_users"  # 指明数据库的表名
-#
-#     user_id = db.Column('id',db.Integer, primary_key=True)  # 整型的主键，会默认设置为自增主键
-#     username = db.Column(db.String(64), unique=True)
-#     password = db.Column(db.String(128))
-#     sex = db.Column(db.Boolean, default=True)
-#     age = db.Column(db.Integer)
-#     email = db.Column(db.String(128), unique=True)
-#     name=db.Column(db.String(20),unique=False)
-#     role_id = db.Column(db.Integer, db.ForeignKey("tbl_roles.id"))  # 从底层中
-#     # 当期账户激活状态
-#     confirm = db.Column(db.Boolean, default=False)
-#
-#     def __init__(self, user_id=None,username=None,email=None, password=None,role_id=None):
-#         self.user_id = user_id
-#         self.username = username
-#         self.password = password
-#         self.email=email
-#         self.role_id=role_id
+class User(db.Model,UserMixin):
+    """用户表"""
+    __tablename__ = "tbl_users"  # 指明数据库的表名
+
+    user_id = db.Column('id',db.Integer, primary_key=True)  # 整型的主键，会默认设置为自增主键
+    username = db.Column(db.String(64), unique=True)
+    password = db.Column(db.String(128))
+    sex = db.Column(db.Boolean, default=True)
+    age = db.Column(db.Integer)
+    email = db.Column(db.String(128), unique=True)
+    name=db.Column(db.String(20),unique=False)
+    # role_id = db.Column(db.Integer, db.ForeignKey("tbl_roles.id"))  # 从底层中
+    role_id=db.Column(db.Integer,default=ROLE_USER)
+    # 当期账户激活状态
+    confirm = db.Column(db.Boolean, default=False)
+
+    def __init__(self, user_id=None,username=None,email=None, password=None,role_id=None):
+        self.user_id = user_id
+        self.username = username
+        self.password = password
+        self.email=email
+        self.role_id=role_id
+    def __repr__(self):
+        return '<User %r>' % (self.username)
 #
 #     @property
 #     def password(self):

@@ -15,26 +15,29 @@ class Config:
     MAIL_SERVER =  os.environ.get('MAIL_SERVER','smtp.163.com')
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME','13545273328@163.com')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD','dk137046')
-HOSTNAME = "127.0.0.1"
-PORT = "3306"
-DATABASE = "apimanager"
-USERNAME = "root"
-PASSWORD = "137046"
+    HOSTNAME = "127.0.0.1"
+    PORT = "3306"
+    DATABASE = "apimanager"
+    USERNAME = "root"
+    PASSWORD = "137046"
 #测试配置这里数据库原本是utf8改为gbk
 class TestingConfig(Config):
     """配置参数 SQLALCHEMY_DATABASE_URI用于连接数据库，SQLALCHEMY_ECHO如果设置成 True，SQLAlchemy 将会记录所有发到标准输出(stderr)的语句，这对调试很有帮助"""
-    SQLALCHEMY_DATABASE_URI = '"mysql+mysqlconnector://{username}:{password}@{host}:{port}/{db}?charset=gbk". \
-        format(username=USERNAME, password=PASSWORD, host=HOSTNAME, port=PORT, db=DATABASE)'
+    SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{}:{}@{}:{}/{}?charset=gbk".format(Config.USERNAME, Config.PASSWORD, Config.HOSTNAME, Config.PORT, Config.DATABASE)
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     SQLALCHEMY_ECHO = True
 
 #开发配置
 class DevelopmentConfig(Config):
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:20111673@127.0.0.1:3306/blogModel'
+    SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{}:{}@{}:{}/{}?charset=gbk" .format(Config.USERNAME, Config.PASSWORD, Config.HOSTNAME, Config.PORT, Config.DATABASE)
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
+    SQLALCHEMY_ECHO = True
 
 #生产配置
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:2011673@127.0.0.1:3306/development'
+    SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{}:{}@{}:{}/{}?charset=gbk" .format(Config.USERNAME, Config.PASSWORD, Config.HOSTNAME, Config.PORT, Config.DATABASE)
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
+    SQLALCHEMY_ECHO = True
 #一个配置的字典
 config = {
     #开发环境
@@ -43,5 +46,5 @@ config = {
     'production':ProductionConfig,
     #测试环境
     'test':TestingConfig,
-    'default':DevelopmentConfig
+    'default':TestingConfig
 }
