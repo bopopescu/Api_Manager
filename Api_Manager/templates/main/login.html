@@ -2,13 +2,13 @@
 {% extends "common/base.html" %}
 {% block content %}
 <h1>登录</h1>
-<form action="" method="post" name="login">
+<form action="" method="post">
     {{form.hidden_tag()}}
     <!--<input type="text" name="name">-->
-    <p>用户名：{{ form.username(size=54) }}<br></p>
+    <p><p>{{ form.username.label }} {{ form.username }} {{ form.username.errors.0 }}</p><br></p>
 
     <!--<input type="password" name="pwd">-->
-    <p>密码：{{ form.password }}</p>
+    <p>{{ form.password.label }} {{ form.password }} {{ form.password.errors.0 }}</p>
     <input type="submit" value="登录">
 </form>
 {% endblock %}

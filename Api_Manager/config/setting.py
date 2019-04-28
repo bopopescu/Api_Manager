@@ -4,9 +4,12 @@
 # @Date:   2019-04-28 16:24:57
 # @Last Modified time: 2019-04-28 16:24:57
 import os
-#所有环境配置的基类
+# 所有环境配置的基类
 class Config:
-    SECRET_KEY = 'dk137046'
+    # Flask - WTF需要用到的2个配置项。CSRF_ENABLED配置启用了跨站请求攻击保护，大部分情况下你都需要开启此功能，这能使你的应用更安全
+    CSRF_ENABLED=True
+    # SECRET_KEY设置当CSRF启用时有效，这将生成一个加密的token供表单验证使用，你要确保这个KEY足够复杂
+    SECRET_KEY = 'secret_key'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     MAIL_SERVER =  os.environ.get('MAIL_SERVER','smtp.163.com')

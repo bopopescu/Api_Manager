@@ -10,8 +10,8 @@ from Api_Manager.model import user_model
 
 class LoginForm(Form):
     """登录表单"""
-    username=StringField('用户名',validators=[DataRequired('username is null'),Length(min=6, max=12, message='长度为6-12位')],render_kw={'placeholder': '请输入用户名...', 'maxlength': 12})
-    password=PasswordField('密码',validators=[DataRequired('password is null'),Length(min=6, max=12, message='长度为6-12位')],render_kw={'placeholder': '请输入用户名...', 'maxlength': 12})
+    username=StringField(label='用户名',validators=[DataRequired('username is null'),Length(min=6, max=12, message='长度为6-12位')],render_kw={'placeholder': '请输入用户名...', 'maxlength': 12})
+    password=PasswordField(label='密码',validators=[DataRequired('password is null'),Length(min=6, max=12, message='长度为6-12位')],render_kw={'placeholder': '请输入用户名...', 'maxlength': 12})
     submit = SubmitField('登录')
 
 class Register(Form):
