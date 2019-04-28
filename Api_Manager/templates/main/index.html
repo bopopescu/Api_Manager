@@ -1,8 +1,16 @@
 <html>
   <head>
+      {% if title %}
     <title>{{title}}-登录</title>
+      {% else %}
+      <title>Welcome to 登录页</title>
+      {% endif %}
+
   </head>
   <body>
       <h1>Hello, {{user.username}}!</h1>
+      {% for post in posts %}
+       <p>{{ post.author.username }}says:<b>{{ post.body }}</b></p>
+       {% endfor %}
   </body>
 </html>

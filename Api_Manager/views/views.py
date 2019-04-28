@@ -10,4 +10,15 @@ from flask import render_template
 @server.route("/index")
 def index():
     user = {'username':'Andy'}
-    return render_template("/main/index.html",title="主页",user=user)
+    #使用循环语句
+    posts=[
+        {
+            'author': {'username': 'John'},
+            'body': 'Beautiful day in Portland!'
+        },
+        {
+            'author': {'username': 'Susan'},
+            'body': 'The Avengers movie was so cool!'
+        }
+    ]
+    return render_template("/main/index.html",title="主页",user=user,posts=posts)
