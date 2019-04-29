@@ -8,9 +8,15 @@ from flask import Flask
 #导入自定义配置
 from Api_Manager.config.setting import config
 from flask_sqlalchemy import SQLAlchemy
+from flask_script import Manager
+from flask_migrate import Migrate,MigrateCommand
+from flask_login import LoginManager
 
 server=Flask(__name__)
 server.config.from_object(config['default'])
 db = SQLAlchemy(server)
+manager=Manager(server)
+migrate=Migrate(server,db)
+manager.add_command('db',MigrateCommand)
 from Api_Manager.views import views,login_view
 from Api_Manager.model import user_model

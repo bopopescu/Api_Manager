@@ -22,11 +22,11 @@ class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(32), unique=True)
     user = db.relationship("User", backref="role")  # 从模型类中
-    def __init__(self, username):
-        self.username = username
+    def __init__(self, name):
+        self.name = name
 
     def __repr__(self):
-        return '<Role %r>' % self.username
+        return '<Role %r>' % self.name
 
 
 class User(db.Model,UserMixin):
@@ -36,19 +36,22 @@ class User(db.Model,UserMixin):
     user_id = db.Column('id',db.Integer, primary_key=True)  # 整型的主键，会默认设置为自增主键
     username = db.Column(db.String(64), unique=True)
     password = db.Column(db.String(128))
-    sex = db.Column(db.Boolean, default=True)
+    sex = db.Column(db.String(8), default=True)
     age = db.Column(db.Integer)
     email = db.Column(db.String(128), unique=True)
-    name=db.Column(db.String(20),unique=False)
+    nickname=db.Column(db.String(20),unique=False)
     role_id = db.Column(db.Integer, db.ForeignKey("tbl_roles.id"),default=ROLE_USER)  # 从底层中
     # 当期账户激活状态
     confirm = db.Column(db.Boolean, default=False)
 
-    def __init__(self, user_id=None,username=None,email=None, password=None,role_id=None):
+    def __init__(self, user_id=None,username=None,email=None, sex=None,age=None,password=None,nickname=None,role_id=None):
         self.user_id = user_id
         self.username = username
         self.password = password
         self.email=email
+        self.sex=sex
+        self.age=age
+        self.nickname=nickname
         self.role_id=role_id
     def __repr__(self):
         return '<User %r>' % (self.username)
