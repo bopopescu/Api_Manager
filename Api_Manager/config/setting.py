@@ -10,11 +10,16 @@ class Config:
     CSRF_ENABLED=True
     # SECRET_KEY设置当CSRF启用时有效，这将生成一个加密的token供表单验证使用，你要确保这个KEY足够复杂
     SECRET_KEY = 'secret_key'
+    basedir = os.path.abspath(os.path.dirname(__file__))
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
+    # 为迁移数据库创建目录db_repository
+    SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
+    #邮箱发送配置
     MAIL_SERVER =  os.environ.get('MAIL_SERVER','smtp.163.com')
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME','13545273328@163.com')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD','dk137046')
+    #数据库信息
     HOSTNAME = "127.0.0.1"
     PORT = "3306"
     DATABASE = "apimanager"

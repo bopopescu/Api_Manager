@@ -12,20 +12,21 @@ from flask import current_app
 from flask_login import UserMixin
 # from Api_Manager.extensions import login_manager
 
-ROLE_USER=0
-ROLE_ADMIN=1
+ROLE_USER=1
+ROLE_TEST=2
+ROLE_ADMIN=0
 
-# class Role(db.Model):
-#     """用户身份表"""
-#     __tablename__ = "tbl_roles"
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(32), unique=True)
-#     user = db.relationship("User", backref="role")  # 从模型类中
-#     def __init__(self, username):
-#         self.username = username
-#
-#     def __repr__(self):
-#         return '<Role %r>' % self.username
+class Role(db.Model):
+    """用户身份表"""
+    __tablename__ = "tbl_roles"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(32), unique=True)
+    user = db.relationship("User", backref="role")  # 从模型类中
+    def __init__(self, username):
+        self.username = username
+
+    def __repr__(self):
+        return '<Role %r>' % self.username
 
 
 class User(db.Model,UserMixin):
@@ -39,8 +40,7 @@ class User(db.Model,UserMixin):
     age = db.Column(db.Integer)
     email = db.Column(db.String(128), unique=True)
     name=db.Column(db.String(20),unique=False)
-    # role_id = db.Column(db.Integer, db.ForeignKey("tbl_roles.id"))  # 从底层中
-    role_id=db.Column(db.Integer,default=ROLE_USER)
+    role_id = db.Column(db.Integer, db.ForeignKey("tbl_roles.id"),default=ROLE_USER)  # 从底层中
     # 当期账户激活状态
     confirm = db.Column(db.Boolean, default=False)
 

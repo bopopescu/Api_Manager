@@ -12,6 +12,5 @@ from flask_sqlalchemy import SQLAlchemy
 server=Flask(__name__)
 server.config.from_object(config['default'])
 db = SQLAlchemy(server)
-from Api_Manager.views import views
-from Api_Manager.views import login_view
+from Api_Manager.views import views,login_view
 from Api_Manager.model import user_model
