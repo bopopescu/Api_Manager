@@ -20,13 +20,13 @@ class Role(db.Model):
     """用户身份表"""
     __tablename__ = "tbl_roles"
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(32), unique=True)
+    type = db.Column(db.String(32), unique=True)
     user = db.relationship("User", backref="role")  # 从模型类中
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, type):
+        self.type = type
 
     def __repr__(self):
-        return '<Role %r>' % self.name
+        return '<Role %r>' % self.type
 
 
 class User(db.Model,UserMixin):
